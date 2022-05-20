@@ -33,8 +33,8 @@ Set-MsolUser -UserPrincipalName $newEmail -StrongAuthenticationRequirements $mfa
 "Adding Microsoft 365 Business License to Tenant"
 Write-Host "Starting Microsoft Graph" ; Start-Sleep -Seconds 3
 Connect-Graph -Scopes User.ReadWrite.All, Organization.Read.All
-$e5Sku = Get-MgSubscribedSku -All | Where-Object SkuPartNumber -eq 'O365_BUSINESS_PREMIUM'
-if(-not (Set-MgUserLicense -UserId "$newEmail" -AddLicenses @{SkuId = $e5Sku.SkuId} -RemoveLicenses @() -ErrorAction SilentlyContinue)) 
+$PremiumSku = Get-MgSubscribedSku -All | Where-Object SkuPartNumber -eq 'O365_BUSINESS_PREMIUM'
+if(-not (Set-MgUserLicense -UserId "$newEmail" -AddLicenses @{SkuId = $PremiumSku.SkuId} -RemoveLicenses @() -ErrorAction SilentlyContinue)) 
   {
     Write-Host "No License Available. Go to Portal."
   }
