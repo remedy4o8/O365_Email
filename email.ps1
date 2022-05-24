@@ -1,7 +1,7 @@
-# This tool will change domain, enforces MFA, and add available license to tenant. 
-# Designed by Andy Pham
+## This tool will change domain, enforces MFA, and add available license to tenant. 
+## Designed by Andy Pham
 
-# Uncomment line 5-11 to install dependency.
+## Uncomment line 5-11 to install dependency.
 # Install-Module MSOnline
 # Install-Module AzureAD
 # Install-Module Microsoft.Graph -Scope CurrentUser
@@ -10,13 +10,13 @@
 # Import-Module AzureAD
 # Import-Module Microsoft.Graph
 
+## Changing Domain
 Write-Host "Change Email Domains" ; Start-Sleep -Seconds 3
 Write-Host "Connecting to Office 365..."
 if(-not (Get-MsolDomain -ErrorAction SilentlyContinue))
   {
-    #Start Microsoft Online Login Session
+    ## Start Microsoft Online Login Session
     Write-Host "Lauching Microsoft Sign In"
-    #Import-Module MSOnline
     Connect-MsolService
     Write-Host "Login Successful"
   }
@@ -26,6 +26,7 @@ $oldEmail = (Read-Host -Prompt "Please enter old email")
 set-msoluserprincipalname -newuserprincipalname $newEmail -userprincipalname $oldEmail
 Write-Host "Tenant's email has changed from $oldEmail to $newEmail"
 
+## Enable MFA
 Write-Host "Enable Enforcing Mult-Factor Authentication" ; Start-Sleep -Seconds 3
 $mf = New-Object -TypeName Microsoft.Online.Administration.StrongAuthenticationRequirement
 $mf.RelyingParty = "*"
@@ -33,6 +34,7 @@ $mfa = @($mf)
 Set-MsolUser -UserPrincipalName $newEmail -StrongAuthenticationRequirements $mfa
 Write-Host "Enabling MFA Complete"
 
+## Applying License to Tenant
 Write-Host "Adding Microsoft 365 Business License to Tenant"
 Write-Host "Starting Microsoft Graph" ; Start-Sleep -Seconds 3
 Connect-Graph -Scopes User.ReadWrite.All, Organization.Read.All
