@@ -1,10 +1,14 @@
 # This tool will change domain, enforces MFA, and add available license to tenant. 
 # Designed by Andy Pham
 
-#Module Dependency
-#MSOnline
-#AzureAD
-#Microsoft.Graph
+# Uncomment line 5-11 to install dependency.
+# Install-Module MSOnline
+# Install-Module AzureAD
+# Install-Module Microsoft.Graph -Scope CurrentUser
+
+# Import-Module MSOnline
+# Import-Module AzureAD
+# Import-Module Microsoft.Graph
 
 Write-Host "Change Email Domains" ; Start-Sleep -Seconds 3
 Write-Host "Connecting to Office 365..."
@@ -12,7 +16,7 @@ if(-not (Get-MsolDomain -ErrorAction SilentlyContinue))
   {
     #Start Microsoft Online Login Session
     Write-Host "Lauching Microsoft Sign In"
-    Import-Module MSOnline
+    #Import-Module MSOnline
     Connect-MsolService
     Write-Host "Login Successful"
   }
@@ -23,7 +27,7 @@ set-msoluserprincipalname -newuserprincipalname $newEmail -userprincipalname $ol
 Write-Host "Tenant's email has changed from $oldEmail to $newEmail"
 
 Write-Host "Enable Enforcing Mult-Factor Authentication" ; Start-Sleep -Seconds 3
-$mf= New-Object -TypeName Microsoft.Online.Administration.StrongAuthenticationRequirement
+$mf = New-Object -TypeName Microsoft.Online.Administration.StrongAuthenticationRequirement
 $mf.RelyingParty = "*"
 $mfa = @($mf)
 Set-MsolUser -UserPrincipalName $newEmail -StrongAuthenticationRequirements $mfa
