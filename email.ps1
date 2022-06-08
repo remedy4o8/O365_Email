@@ -1,14 +1,15 @@
 ## This tool will change domain, enforces MFA, and add available license to tenant. 
 ## Designed by Andy Pham
 
-## Download, install, and import the required PowerShell modules.
-Install-Module MSOnline
-Install-Module AzureAD
-Install-Module Microsoft.Graph -Scope CurrentUser
+# Uncomment to Download, install, and import the required PowerShell modules.
+# Install-Module MSOnline
+# Install-Module AzureAD
+# Write-Host "Microsoft.Graph will take awhile to install"
+# Install-Module Microsoft.Graph -Scope CurrentUser
 
-Import-Module MSOnline
-Import-Module AzureAD
-Import-Module Microsoft.Graph
+# Import-Module MSOnline
+# Import-Module AzureAD
+# Import-Module Microsoft.Graph
 
  ## Start Microsoft Online Login Session
 Write-Host "Connecting to Office 365..."
